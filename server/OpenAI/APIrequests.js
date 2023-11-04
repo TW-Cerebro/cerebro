@@ -96,9 +96,4 @@ app.post('/ask-question', async (req,res) => {
     }
 });
 
-messages:
-{ role: 'system', content: "I want you to pretend that you're a fighter pilot"}
-{ role: 'user', content: "hi my name's jordan"}
-{role: 'assistant', content: 'Hi jordan how can i help today'}
-{ role: 'user', content: "question2"}
-{role: 'assistant', content: 'Hi jordan how can i help today'}
+
