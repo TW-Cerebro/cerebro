@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 3000;
 
 //body parsers
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.static(path.join(__dirname, '../dist')));
 app.use(express.static(path.join(__dirname, '../public')));
@@ -20,7 +20,12 @@ app.get('/', (req, res) => {
   res.status(200).sendFile(path.join(__dirname, '../public/index.html'))
 })
 
-app.use(APIrequests)
+app.use('/api', APIrequests);
+
+app.use( (err,req,res,next) => {
+  console.error(err);
+  res.status(500).send('Something went wrong!')
+});
 
 app.listen(PORT, () => {
   console.log(`Server listening on port: ${PORT}`);

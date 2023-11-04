@@ -5,10 +5,10 @@ const router = express.Router();
 
 const studySessionsStore = {};
 
-app.post('/create-study-session', async (req, res) => {
+router.post('/create-study-session', async (req, res) => {
     const { firstName, gradeLevel, sessionName, topic, notes, mainPoints, painPoints } = req.body;
 
-    studySessionsStore[sessionName] = {
+    const session = {
         firstName,
         gradeLevel,
         sessionName,
@@ -18,6 +18,9 @@ app.post('/create-study-session', async (req, res) => {
         painPoints,
     };
 
+    //Storing the study session using the sessionName as the key
+    studySessionsStore[sessionName] = session;
+
     //Create initial chatbot message based on session details
 
     const customPrompt = generatePrompt(req.body)
@@ -25,7 +28,7 @@ app.post('/create-study-session', async (req, res) => {
     //API call
 
     try {
-        const inititalResponse = await openai.createCompletion({
+        const initialResponse = await openai.createCompletion({
             model: "gpt-3.5-turbo",
             prompt: customPrompt,
             temperature: 0.7,
@@ -46,12 +49,12 @@ app.post('/create-study-session', async (req, res) => {
         res.status(500).json({
             success: false,
             message: 'Error while initializing chatbot',
-            error: message.error
+            error: error.message
         });
     }
 });
 
-app.post('/ask-question', async (req,res) => {
+router.post('/ask-question', async (req,res) => {
     const { question, sessionName } = req.body;
 
     // Get session details from session store
@@ -96,4 +99,4 @@ app.post('/ask-question', async (req,res) => {
     }
 });
 
-
+module.exports = router;
