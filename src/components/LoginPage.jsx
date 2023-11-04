@@ -1,7 +1,9 @@
 import React from "react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function LoginPage() {
+  const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -12,6 +14,8 @@ function LoginPage() {
         username,
         password
       })
+    }).then(res => {
+      navigate('/mainmenu');
     });
   }
 

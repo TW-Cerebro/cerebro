@@ -1,7 +1,13 @@
 import React from "react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const FrontPage = ({ createSession }) => {
+  const navigate = useNavigate();
+  const createSession = () => {
+    
+
+  }
   return (
     <>
       <h1>What would you like to learn today?</h1>

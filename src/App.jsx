@@ -1,4 +1,5 @@
 import React from "react";
+import { Routes, Route } from 'react-router-dom';
 import { useState } from "react";
 import LoginPage from "./components/LoginPage.jsx";
 import SignupPage from "./components/SignupPage.jsx";
@@ -7,8 +8,21 @@ import InputPage from "./components/InputPage.jsx";
 import SessionPage from "./components/SessionPage.jsx";
 
 const App = () => {
+  return (
+    <div className="App">
+      <Routes>
+        <Route path="/" element={<LoginPage />} />
+        <Route path="/signup" element={<SignupPage />} />
+        <Route path="/mainmenu" element={<FrontPage />} />
+        <Route path="/createsession" element={<InputPage />} />
+        <Route path="/studysession" element={<SessionPage />} />
+      </Routes>
+    </div>
+  )
+
+
   // return <SignupPage />
-  return <LoginPage />
+  // return <LoginPage />
 
   // const [mode, updateMode] = useState("loginPage");
   // const [title, updateTitle] = useState("");

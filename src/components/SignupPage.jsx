@@ -3,12 +3,14 @@ import { useState } from "react";
 
 function SignupPage() {
   const [firstname, setFirstname] = useState('');
+  const [lastname, setLastname] = useState('');
   const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [gradeLevel, setGradeLevel] = useState('');
 
   function createUser() {
-    
+
   }
 
 

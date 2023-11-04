@@ -1,4 +1,4 @@
-require(dotenv).config
+require('dotenv').config();
 const { Configuration, OpenAIApi} = require('openai');
 
 // configuring OpenAIApi client with API key
