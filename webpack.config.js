@@ -37,6 +37,7 @@ module.exports = {
         test: /\.(png|jpe?g|gif)$/i, 
         exclude: /node_modules/, 
         type: 'asset/resource',
+        loader: 'file-loader'
       },
     ],
   },
