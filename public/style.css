@@ -99,6 +99,16 @@ body {
   margin-bottom: 20px;
 }
 
+.headerMenu {
+  display: flex;
+  justify-content: space-between;
+}
+
+.headerMenu li {
+  list-style: none;
+  font-size: 1.5rem;
+}
+
 .mainMenu {
   font-family: "Oswald", sans-serif;
   color: #FF6600;
@@ -107,22 +117,30 @@ body {
   height: 100%;
 }
 
-.mainMenu .username {
+.username {
   color: #FFB703;
 }
 
-.mainMenu li {
+.headerMenu li {
   list-style: none;
   font-size: 1.5rem;
 }
 
-.mainMenu img {
-  width: 200px;
+.headerMenu a:link {
+  text-decoration: none;
 }
 
-.mainMenu .headerMenu {
-  display: flex;
-  justify-content: space-between;
+.headerMenu a:hover {
+  text-decoration: underline;
+}
+
+.headerMenu a:visited {
+  text-decoration: none;
+  color: #FF6600;
+}
+
+.headerMenu img {
+  width: 200px;
 }
 
 .mainMenu .selectionMenu {
@@ -162,14 +180,83 @@ body {
   cursor: pointer;
 }
 
-.mainMenu .footerMenu ul {
+.footerMenu {
+  clear: both;
+  position: relative;
+  height: 20px;
+  margin-top: -20px;
+}
+
+.footerMenu ul {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
 }
 
-.mainMenu .footerMenu ul li {
+.footerMenu ul li {
   padding-left: 20px;
+  list-style: none;
+  font-size: 1.5rem;
+}
+
+.reviewStudySession {
+  font-family: "Oswald", sans-serif;
+  color: #FF6600;
+  margin: 20px;
+  font-weight: bold;
+  height: 100%;
+}
+
+.reviewPage {
+  margin-top: -125px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 100vh;
+  color: white;
+  font-size: 2.5rem;
+}
+
+.createFlashCards {
+  font-family: "Oswald", sans-serif;
+  color: #FF6600;
+  margin: 20px;
+  font-weight: bold;
+  height: 100%;
+}
+
+.createFlashCardsPage {
+  margin-top: -125px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 100vh;
+  color: white;
+  font-size: 2.5rem;
+}
+
+.reviewFlashCards {
+  font-family: "Oswald", sans-serif;
+  color: #FF6600;
+  margin: 20px;
+  font-weight: bold;
+  height: 100%;
+}
+
+.reviewFlashCardsPage {
+  margin-top: -125px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 100vh;
+  color: white;
+  font-size: 2.5rem;
 }
 
 @media screen and (max-width: 1800px) {
