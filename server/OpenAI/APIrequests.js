@@ -1,102 +1,165 @@
-// const express = require('express');
-// const { openai } = require('./APIconfig');
+require('dotenv').config()
+const express = require('express');
+//const openai = require('./APIconfig').openai; 
+const generatePrompt = require('./generatePrompt'); 
+//const fetch = require('node-fetch');
 
-// const router = express.Router();
+
+const router = express.Router();
+
+
+const OPENAI_API_KEY = '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';
 
 // const studySessionsStore = {};
 
-// router.post('/create-study-session', async (req, res) => {
-//     const { firstName, gradeLevel, sessionName, topic, notes, mainPoints, painPoints } = req.body;
+router.post('/create-study-session', async (req, res, next) => {
+    //console.log test
+    console.log('Received request to create study session')
 
-//     const session = {
-//         firstName,
-//         gradeLevel,
-//         sessionName,
-//         topic,
-//         notes,
-//         mainPoints,
-//         painPoints,
-//     };
-
-//     //Storing the study session using the sessionName as the key
-//     studySessionsStore[sessionName] = session;
-
-//     //Create initial chatbot message based on session details
+    const { firstName, gradeLevel, sessionName, topic, notes, mainPoints, painPoints } = req.body;
+//console.log test
+console.log('req.body:', req.body)
+    const session = {
+        firstName,
+        gradeLevel,
+        sessionName,
+        topic,
+        notes,
+        mainPoints,
+        painPoints,
+        messages: []
+    };
+const testPrompt = "pretend you are a very cool person!"
+    //Create initial chatbot prompt based on session details
 
 //     const customPrompt = generatePrompt(req.body)
 
-//     //API call
+    //console.log testing
+    console.log('customPrompt:', customPrompt)
 
-//     try {
-//         const initialResponse = await openai.createCompletion({
-//             model: "gpt-3.5-turbo",
-//             prompt: customPrompt,
-//             temperature: 0.7,
-//             max_tokens: 150,
-//         });
+    // Push prompt to program chatbot 
+    session.messages.push({ role: "system", content: customPrompt })
+    
+    // Push simulated greeting to evoke response from chatbot
+    session.messages.push({ role: "user", content: 'hi!' })
+    
+    // Save session to session store with sessionName as key
+    studySessionsStore[sessionName] = session;
+//console.log test
+console.log('session object:', session)
+    //API call
 
-        
+    try {
+        const response = await fetch('https://api.openai.com/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${OPENAI_API_KEY}`
+            },
+            body: JSON.stringify({
+                'model': "gpt-3.5-turbo",
+                'messages': session.messages
+            })
+        });
+        console.log(response)
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
 
-//         const chatbotMessage = initialResponse.data.choices[0].text.trim();
+        const responseData = await response.json();
+        //console.log testing
+        console.log('responsedata:',responseData)
+        const sanitizedResponse = responseData.choices[0].message.content.trim();
+        //console.log testing
+        console.log('API call succeeded:', responseData.choices[0]);
 
-//         res.json({
-//             success: true,
-//             message: 'Study session created and chatbot initialized',
-//             studySession: studySessionStore[sessionName],
-//             chatbotMessage: chatbotMessage
-//         });
-//     } catch (error) {
-//         res.status(500).json({
-//             success: false,
-//             message: 'Error while initializing chatbot',
-//             error: error.message
-//         });
-//     }
-// });
+        //add chatbot response to messages list for reference in next user interaction
+        studySessionsStore[sessionName].messages.push({ role: "assistant", content: sanitizedResponse });
 
-// router.post('/ask-question', async (req,res) => {
-//     const { question, sessionName } = req.body;
+        res.json({
+            success: true,
+            message: 'Study session created and chatbot initialized',
+            studySession: studySessionsStore[sessionName],
+            chatbotMessage: sanitizedResponse
+        });
+    } catch (error) {
+        //console.log testing
+        console.error('API call failed:', error)
+        res.status(500).json({
+            success: false,
+            message: 'Error while initializing chatbot',
+            error: error.message
+        });
+        next(error);
+    }
+});
 
-//     // Get session details from session store
-//     const studySession = studySessionStore[sessionName];
+router.post('/ask-question', async (req,res, next) => {
+    const { question, sessionName } = req.body;
 
-//     if(!studySession) {
-//         return res.status(404).json({
-//             success: false,
-//             message: 'Study session not found',
-//         });
-//     }
+    //console.log testing
+    console.log('request body:', req.body)
+    
+    
+    // Get session details from session store
+    const session = studySessionsStore[sessionName];
+    
+    //console.log testing
+    console.log('Session:', session)
 
-//     //Check if this is the first question in the chat or a follow-up
-//     if(!studySession.messages){
-//         studySession.messages = [
-//             { role: "system", content: customPrompt }
-//         ];
-//     }
-//     // Add the new question to the message list
-//     studySession.messages.push({ role: "user", content: question });
+    if(!session) {
+        return res.status(404).json({
+            success: false,
+            message: 'Study session not found',
+        });
+    }
 
-//     try {
-//         const response = await openai.createCompletion({
-//             model: "gpt-3.5-turbo",
-//             messages: studySession.messages,
-//         });
+    // Add the new question to the message list
+    studySessionsStore[sessionName].messages.push({ role: "user", content: question });
 
-//     // Add bot's response to the message list
-//     studySession.messages.push({ role: "assistant", content: response.data.choices[0].message.content });
+    // API call (rest of code is same as previous route)
+    try {
+        const response = await fetch('https://api.openai.com/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${OPENAI_API_KEY}`
+            },
+            body: JSON.stringify({
+                model: "gpt-3.5-turbo",
+                messages: session.messages
+            })
+        });
 
-//     //Respond to front-end request with answer from bot
-//     res.json({
-//         success: true,
-//         answer: response.data.choices[0].message.content,
-//     });
-//     } catch (error) {
-//         res.status(500).json({
-//             success: false,
-//             message: 'Error while asking question',
-//             error: error.message,
-//         })
-//     }
-// });
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const responseData = await response.json();
+
+        const sanitizedResponse = responseData.choices[0].message.content.trim();
+        //console.log testing
+        console.log('API call succeeded:', responseData.choices[0]);
+
+        //add chatbot response to messages list for reference in next user interaction
+        studySessionsStore[sessionName].messages.push({ role: "assistant", content: sanitizedResponse });
+
+        res.json({
+            success: true,
+            message: 'Chatbot responded',
+            studySession: studySessionsStore[sessionName],
+            chatbotMessage: sanitizedResponse
+        });
+    } catch (error) {
+        //console.log testing
+        console.error('API call failed:', error)
+        res.status(500).json({
+            success: false,
+            message: 'Error while creating chatbot response',
+            error: error.message
+        });
+        next(error);
+    }
+});
 
 // module.exports = router;
