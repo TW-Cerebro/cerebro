@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 function LoginPage() {
   const navigate = useNavigate();
+
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -42,7 +43,7 @@ function LoginPage() {
           cols="300"></input>
         <div>
           <button className="orangeBtn" onClick={authenticateUser}>Login</button>
-          <button className="orangeBtn">Sign Up</button>
+          <button className="orangeBtn"onClick={() => navigate('/signup')}>Sign Up</button>
         </div>
         <p>Forgot your password?</p>
       </form>
