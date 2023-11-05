@@ -1,4 +1,4 @@
-require('dotenv').config()
+//require('dotenv').config()
 const express = require('express');
 //const openai = require('./APIconfig').openai; 
 const generatePrompt = require('./generatePrompt'); 
@@ -8,7 +8,7 @@ const generatePrompt = require('./generatePrompt');
 const router = express.Router();
 
 
-const OPENAI_API_KEY = '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';
+const OPENAI_API_KEY = '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';
 
 const studySessionsStore = {};
 
@@ -29,7 +29,8 @@ console.log('req.body:', req.body)
         painPoints,
         messages: []
     };
-const testPrompt = "pretend you are a very cool person!"
+    //const testPrompt = "pretend you are a very cool person!"
+
     //Create initial chatbot prompt based on session details
 
     const customPrompt = generatePrompt(req.body)
@@ -126,8 +127,8 @@ router.post('/ask-question', async (req,res, next) => {
                 'Authorization': `Bearer ${OPENAI_API_KEY}`
             },
             body: JSON.stringify({
-                model: "gpt-3.5-turbo",
-                messages: session.messages
+                'model': "gpt-3.5-turbo",
+                'messages': session.messages
             })
         });
 

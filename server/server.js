@@ -1,8 +1,7 @@
 const express = require('express');
 const path = require('path');
-const bodyParser= require('body-parser');
+const bodyParser = require('body-parser');
 
-//API request import
 const APIrequests = require('./OpenAI/APIrequests');
 
 const app = express();
@@ -17,14 +16,34 @@ app.use(express.static(path.join(__dirname, '../public')));
 app.use(express.static(path.join(__dirname, '../src/images')));
 
 app.get('/', (req, res) => {
+  //console.log testing:
+  console.log('Received request from root')
+
   res.status(200).sendFile(path.join(__dirname, '../public/index.html'))
+  //console.log testing:
+  console.log('Response sent back to root')
 })
 
 app.use('/api', APIrequests);
 
-app.use( (err,req,res,next) => {
-  console.error(err);
-  res.status(500).send('Something went wrong!')
+app.use((err, req, res, next) => {
+  console.error('Error:', err.message);
+  console.error('Stack:', err.stack);
+  console.error('Path:', req.path);
+  console.error('Method:', req.method);
+  //console.log testing:
+  if(res.headersSent) {
+    return next(err);
+  }
+
+  res.status(err.statusCode || 500).json({
+    success: false,
+    message: 'Internal Server Error',
+    error: {
+      message: err.message,
+      stack: process.env.NODE_ENV === 'development' ? err.stack : undefined,
+    },
+  });
 });
 
 app.listen(PORT, () => {
