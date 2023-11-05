@@ -4,6 +4,7 @@ import { useState } from "react";
 import LoginPage from "./components/LoginPage.jsx";
 import SignupPage from "./components/SignupPage.jsx";
 import FrontPage from "./components/FrontPage.jsx";
+import CreateSession from "./components/CreateSession.jsx";
 import InputPage from "./components/InputPage.jsx";
 import SessionPage from "./components/SessionPage.jsx";
 import ReviewStudySession from "./components/ReviewStudySession.jsx";
@@ -18,7 +19,7 @@ const App = () => {
         <Route path="/signup" element={<SignupPage />} /> */}
         <Route path="/" element={<FrontPage />} />
         {/* <Route path="/mainmenu" element={<FrontPage />} /> */}
-        <Route path="/createsession" element={<InputPage />} />
+        <Route path="/createsession" element={<CreateSession />} />
         <Route path="/studysession" element={<SessionPage />} />
         <Route path="/reviewstudysession" element={<ReviewStudySession />} />
         <Route path="/createflashcards" element={<CreateFlashCards />} />

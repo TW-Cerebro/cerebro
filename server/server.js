@@ -3,7 +3,7 @@ const path = require('path');
 const bodyParser= require('body-parser');
 
 //API request import
-const APIrequests = require('./OpenAI/APIrequests');
+// const APIrequests = require('./OpenAI/APIrequests');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -20,7 +20,7 @@ app.get('/', (req, res) => {
   res.status(200).sendFile(path.join(__dirname, '../public/index.html'))
 })
 
-app.use('/api', APIrequests);
+// app.use('/api', APIrequests);
 
 app.use( (err,req,res,next) => {
   console.error(err);
