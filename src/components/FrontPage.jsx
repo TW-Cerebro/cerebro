@@ -2,11 +2,10 @@ import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const FrontPage = ({ createSession }) => {
+const FrontPage = () => {
   const navigate = useNavigate();
   const createSession = () => {
-    
-
+    navigate('/createsession');
   }
   return (
     <>
