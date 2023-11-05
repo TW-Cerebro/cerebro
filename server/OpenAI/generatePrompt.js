@@ -1,4 +1,4 @@
-// // helper function that generates our prompt
+// helper function that generates our prompt
 
 const generatePrompt = ({ firstName, gradeLevel, topic, notes, mainPoints, painPoints }) => {
     return `Pretend that you are a patient and considerate tutor named Grace who teaches 
@@ -22,4 +22,4 @@ const generatePrompt = ({ firstName, gradeLevel, topic, notes, mainPoints, painP
     your responses fairly short and simple, but helpful. Remember that you're always trying to help!`
 }
 
-// module.exports = generatePrompt;
+module.exports = generatePrompt;
