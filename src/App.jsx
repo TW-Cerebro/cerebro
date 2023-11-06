@@ -5,6 +5,7 @@ import LoginPage from "./components/LoginPage.jsx";
 import SignupPage from "./components/SignupPage.jsx";
 import FrontPage from "./components/FrontPage.jsx";
 import CreateSession from "./components/CreateSession.jsx";
+import StudySession from "./components/StudySession.jsx";
 import InputPage from "./components/InputPage.jsx";
 import SessionPage from "./components/SessionPage.jsx";
 import ReviewStudySession from "./components/ReviewStudySession.jsx";
@@ -15,12 +16,12 @@ const App = () => {
   return (
     <div className="App">
       <Routes>
-        {/* <Route path="/" element={<LoginPage />} />
-        <Route path="/signup" element={<SignupPage />} /> */}
-        <Route path="/" element={<FrontPage />} />
-        {/* <Route path="/mainmenu" element={<FrontPage />} /> */}
+        <Route path="/" element={<LoginPage />} />
+        <Route path="/signup" element={<SignupPage />} />
+        {/* <Route path="/" element={<CreateSession />} /> */}
+        <Route path="/mainmenu" element={<FrontPage />} />
         <Route path="/createsession" element={<CreateSession />} />
-        <Route path="/studysession" element={<SessionPage />} />
+        <Route path="/studysession" element={<StudySession />} />
         <Route path="/reviewstudysession" element={<ReviewStudySession />} />
         <Route path="/createflashcards" element={<CreateFlashCards />} />
         <Route path="/reviewflashcards" element={<ReviewFlashCards />} />

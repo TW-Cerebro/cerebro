@@ -1,6 +1,24 @@
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
+const userController = require('./Database/UserController.js')
+
+const mongoose = require('mongoose');
+
+const atlasUri = 'mongodb+srv://lfv2bcerebro:IQBO5fsrsenrmg9A@cluster0.rfcpwqu.mongodb.net/?retryWrites=true&w=majority'
+
+mongoose.connect(atlasUri)
+  .then(() => {
+  console.log('Connected to the database!');
+  }) .catch (err => {
+    console.error('MongoDB connection error:', err);
+  });
+
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, "MongoDB connection error:"));
+db.once('open', function() {
+  console.log('Connected to the database');
+});
 
 const APIrequests = require('./OpenAI/APIrequests');
 
@@ -25,6 +43,8 @@ app.get('/', (req, res) => {
 })
 
 app.use('/api', APIrequests);
+
+app.use('/user', userController);
 
 app.use((err, req, res, next) => {
   console.error('Error:', err.message);
