@@ -1,26 +1,23 @@
 import React from "react";
 import HeaderMenu from "./HeaderMenu.jsx";
 import FooterMenu from "./FooterMenu.jsx";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Message from "./Message.jsx";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
-// const questions = [
-//   "How are you?",
-//   "How can I help you today?",
-//   "What are you going to do tomorrow?",
-// ];
-
 const SessionPage = ({username}) => {
   const [question, setQuestion] = useState('');
   const [messageList, updateMessageList] = useState([]);
-  const [convoHistory, setConvoHistory] = useState([]);
-  //const [answer, updateAnswer] = useState('');
+  const [convoHistory, setConvoHistory] = useState([]); 
   const location = useLocation();
   const data = location.state;
+  const scrollSpan= useRef();
+  const navigate = useNavigate();
 
-  // createSession(data.sessionName,  
+  useEffect(() => {
+    scrollSpan.current.scrollIntoView({ behavior: "smooth" });
+ }, [messageList]);
 
   function startSession() {
     fetch('/api/create-study-session', {
@@ -51,6 +48,9 @@ const SessionPage = ({username}) => {
 
   function askQuestion(e) {
     e.preventDefault();
+    let currentQuestion = question;
+    setQuestion("Loading...");
+
     fetch('/api/ask-question', {
       method: 'POST',
       headers: {
@@ -58,44 +58,46 @@ const SessionPage = ({username}) => {
       },
       body: JSON.stringify({
         convoHistory,
-        question
+        question: currentQuestion
       })
     })
     .then(response => response.json())
     .then(data => {
       setConvoHistory(data.convoHistory);
       const newMessage = [...messageList];
-      newMessage.push(question);
+      newMessage.push(currentQuestion);
       newMessage.push(data.chatbotMessage);
       updateMessageList(newMessage);
+      setQuestion('');
     })
   }
   
-  // const submitHandler = (e) => {
-  //   e.preventDefault();
-  //   const newMessage = [...messageList];
-  //   newMessage.push(randomQuestion());
-  //   newMessage.push(inputText);
-  //   updateMessageList(newMessage);
-  // }
+  function saveSession(e) {
+    
+  }
 
   return (
     <div className="studySession">
       <HeaderMenu username = {username} />
       <div className="chatView">
-        <nav>
-          <button className="orangeBtn" onClick={startSession}>Start Session</button>
-          <button className="orangeBtn">Save Session</button>
-        </nav>
+      <div className="chatHeader">
+          <h1>Study Session</h1>
+          <nav className="buttonNav">
+            <button className="orangeBtn" onClick={startSession}>Start Session</button>
+            <button className="orangeBtn" onClick={() => navigate('/mainmenu')}>Save Session</button>
+          </nav>
+        </div>
         <div className="chatArea">
           <div>
             {messageList.map((message, index) => {
-              return <Message message={message} key={index}></Message>;
+              let color =  (index % 2 === 0) ? "white" : "#FFB703";
+              return <Message message={message} key={index} color={color}></Message>;
             })}
           </div>
+          <span ref={scrollSpan}></span>
         </div>
         <form className="chatUserInput" onSubmit={askQuestion}>
-          <input
+          <textarea
             className="formInput" 
             name="topic"
             type="textarea" 
@@ -103,43 +105,40 @@ const SessionPage = ({username}) => {
             onChange={(e) => setQuestion(e.target.value)}
             required 
             placeholder="Chat with Grace">
-          </input>
+          </textarea>
           <button className="orangeBtn" type="submit">Submit</button>
         </form>
       </div>
       <FooterMenu />
     </div>
-
-
-//updateMessageList(messageList.concat([inputText, randomQuestion()]));
-
-  // const randomQuestion = () => {
-  //   const index = Math.floor(Math.random() * questions.length);
-  //   return questions[index];
-  // };
-
-  //const initialQuestion = randomQuestion();
-  
-  // const answerChangeHandler = (e) => {
-  //   updateAnswer(e.target.value);
-  // };
-
-    // <>
-    //   <h1>studying session</h1>
-    //   <div>
-    //     {messageList.map((message, index) => {
-    //       return <Message message={message} key={index}></Message>;
-    //     })}
-    //   </div>
-    //   <div>
-    //     <label>
-    //       Your Answer Here:
-    //       <input type="text" value={answer} onChange={answerChangeHandler} />
-    //     </label>
-    //     <button onClick={submitHandler}>Submit Answer</button>
-    //   </div>
-    // </>
   );
 };
 
 export default SessionPage;
+
+
+ // For Iteration Team: starting point for feature - saving session to database so users can retrieve past sessions and go over notes. 
+  //   function saveSession() {
+  //   fetch('/api/save', {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //     body: JSON.stringify({
+  //       sessionId, // need to have this state defined and updated when the session starts?
+  //       convoHistory
+  //     })
+  //   })
+  //   .then(response => {
+  //     if (response.ok) {
+  //       navigate('/mainmenu'); // Navigate to front page on successful save
+  //     }
+  //     return response.json();
+  //   })
+  //   .then(data => {
+  //     // Handle response data
+  //   })
+  //   .catch(err => {
+  //     console.error('Error saving session:', err);
+  //   });
+  // }

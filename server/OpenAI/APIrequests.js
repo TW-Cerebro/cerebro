@@ -8,7 +8,7 @@ const generatePrompt = require('./generatePrompt');
 const router = express.Router();
 
 
-const OPENAI_API_KEY = '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';
+const OPENAI_API_KEY = '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';
 
 //const studySessionsStore = {};
 

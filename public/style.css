@@ -319,7 +319,8 @@ body {
   flex-direction: column;
 }
 
-.formRightSide input {
+.formRightSide textarea {
+  padding: 20px;
   width: 700px;
   height: 600px;
 }
@@ -347,12 +348,6 @@ body {
   height: 100%;
 }
 
-.studySession nav {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-}
-
 .chatView {
   margin-top: -125px;
   display: flex;
@@ -370,6 +365,82 @@ body {
   flex-direction: row;
 }
 
+.chatHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 20px;
+  font-size: 1.25rem;
+  width: 1600px;
+}
+
+.chatArea {
+  padding: 20px;
+  height: 400px;
+  width: 1600px;
+  border: 5px solid #219EBC;
+  scroll-behavior: smooth;
+  overflow: scroll;
+  font-family: "Roboto", sans-serif;
+  font-size: 1.25rem;
+}
+
+.chatUserInput textarea {
+  padding: 20px;
+  margin-top: 20px;
+  width: 800px;
+  height: 50px;
+}
+
+.messageDiv {
+  margin-bottom: 15px;
+}
+
+@media screen and (max-height: 1000px) {
+  .chatView {
+    margin-top: -120px;
+  }
+}
+
+@media screen and (max-height: 900px) {
+  .chatView {
+    margin-top: -100px;
+  }
+}
+
+@media screen and (max-height: 800px) {
+  .chatView {
+    margin-top: -50px;
+  }
+}
+
+@media screen and (max-height: 700px) {
+  .chatView {
+    margin-top: -40px;
+  }
+
+  .chatArea {
+    height: 300px;
+  }
+}
+
+@media screen and (max-height: 600px) {
+  .chatArea {
+    height: 200px;
+  }
+}
+
+@media screen and (max-height: 500px) {
+  .chatView {
+    margin-top: -20px;
+  }
+
+  .chatArea {
+    height: 200px;
+  }
+}
+
 @media screen and (max-width: 1800px) {
   .mainMenu h1 {
     font-size: 2.5rem;
@@ -384,6 +455,20 @@ body {
 }
 
 @media screen and (max-width: 1650px) {
+  .chatHeader {
+    width: 1300px;
+  }
+  
+  .chatArea {
+    width: 1300px;
+  }
+  
+  .chatUserInput textarea {
+    padding: 20px;
+    width: 700px;
+    height: 50px;
+  }
+
   .createSessionMain form {
     width: 1400px;
   }
@@ -392,7 +477,7 @@ body {
     width: 500px;
   }
 
-  .formRightSide input {
+  .formRightSide textarea {
     width: 600px;
     height: 600px;
   }
@@ -433,7 +518,7 @@ body {
     width: 400px;
   }
 
-  .formRightSide input {
+  .formRightSide textarea {
     width: 500px;
     height: 600px;
   }
@@ -453,6 +538,22 @@ body {
   }
 }
 
+@media screen and (max-width: 1350px) {
+  .chatHeader {
+    width: 1150px;
+  }
+  
+  .chatArea {
+    width: 1150px;
+  }
+  
+  .chatUserInput textarea {
+    padding: 20px;
+    width: 700px;
+    height: 50px;
+  }
+}
+
 @media screen and (max-width: 1250px) {
   .createSessionMain form {
     width: 1000px;
@@ -462,13 +563,27 @@ body {
     width: 300px;
   }
 
-  .formRightSide input {
+  .formRightSide textarea {
     width: 400px;
     height: 600px;
   }
 }
 
 @media screen and (max-width: 1200px) {
+  .chatHeader {
+    width: 1000px;
+  }
+  
+  .chatArea {
+    width: 1000px;
+  }
+  
+  .chatUserInput textarea {
+    padding: 20px;
+    width: 700px;
+    height: 50px;
+  }
+
   .mainMenu h1 {
     font-size: 2.5rem;
   }
@@ -482,6 +597,38 @@ body {
   }
 }
 
+@media screen and (max-width: 1050px) {
+  .chatHeader {
+    width: 700px;
+  }
+  
+  .chatArea {
+    width: 700px;
+  }
+  
+  .chatUserInput textarea {
+    padding: 20px;
+    width: 600px;
+    height: 50px;
+  }
+
+  .createSessionMain form {
+    width: 900px;
+  }
+
+  .createSessionMain .formItem input {
+    width: 300px;
+  }
+
+  .formLeftSide input {
+    width: 400px;
+  }
+
+  .formRightSide textarea {
+    width: 350px;
+    height: 600px;
+  }
+}
 
 @media screen and (max-width: 1000px) {
   .mainMenu {
@@ -510,6 +657,44 @@ body {
   }
 }
 
+@media screen and (max-width: 900px) {
+  .createSessionMain {
+    margin: 100px 0;
+  }
+
+  .createSessionForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .createSessionMain form {
+    width: 700px;
+  }
+
+  .createSessionMain .formItem input {
+    width: 500px;
+  }
+
+  .formLeftSide input {
+    width: 400px;
+  }
+
+  .createSessionMain .formItem {
+    align-items: center;
+  }
+
+  .formRightSide textarea {
+    width: 500px;
+    height: 650px;
+  }
+}
+
+@media screen and (max-height: 900px) {
+  .createSessionMain {
+    margin-top: -50px;
+  }
+}
+
 @media screen and (max-width: 850px) {
   .mainLoginPage img {
     width: 300px;
@@ -517,6 +702,20 @@ body {
 }
 
 @media screen and (max-width: 750px) {
+  .chatHeader {
+    width: 400px;
+  }
+  
+  .chatArea {
+    width: 400px;
+  }
+  
+  .chatUserInput textarea {
+    padding: 20px;
+    width: 300px;
+    height: 80px;
+  }
+  
   .mainLoginPage {
     flex-direction: column;
   }
@@ -534,6 +733,35 @@ body {
   .mainLoginPage img {
     width: 300px;
   }
+
+  .createSessionMain {
+    margin: 100px 0;
+  }
+
+  .createSessionMain form {
+    width: 500px;
+  }
+
+  .createSessionMain .formItem input {
+    width: 350px;
+  }
+
+  .formLeftSide input {
+    width: 300px;
+  }
+
+  .createSessionMain .formItem {
+    align-items: center;
+  }
+
+  .createSessionMain h1 {
+    font-size: 1.5rem;
+  }
+
+  .formRightSide textarea {
+    width: 350px;
+    height: 650px;
+  }
 }
 
 @media screen and (max-width: 650px) {
@@ -547,6 +775,21 @@ body {
 }
 
 @media screen and (max-width: 500px) {
+  .chatHeader {
+    width: 300px;
+  }
+  
+  .chatArea {
+    height: 300px;
+    width: 400px;
+  }
+  
+  .chatUserInput textarea {
+    padding: 20px;
+    width: 200px;
+    height: 100px;
+  }
+
   .selectionButtons {
     grid-template-columns: repeat(1, 1fr);
   }

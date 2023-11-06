@@ -18,6 +18,7 @@ const studySessionSchema = new mongoose.Schema({
   notes: { type: String, required: true },
   mainPoints: { type: String, required: true },
   painPoints: { type: String, required: true },
+  conversationHistory: [{ message: String, timestamp: Date }],
 });
 
 const User = mongoose.model('User', userSchema);
