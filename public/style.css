@@ -268,7 +268,7 @@ body {
 }
 
 .createSessionMain {
-  margin-top: -125px;
+  margin-top: -50px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -281,6 +281,93 @@ body {
 
 .createSessionMain form {
   border: 5px solid #219EBC;
+  width: 1600px;
+}
+
+.createSessionMain h1 {
+  font-size: 2.5rem;
+  text-align: left;
+  margin-bottom: 30px;
+}
+
+.createSessionMain .formItem input {
+  width: 600px;
+}
+
+.createSessionForm {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.createSessionForm label {
+  font-family: "Oswald", sans-serif;
+  font-size: 1.25rem;
+  color: #FFB703;
+  margin: 8px 15px 0 0;
+}
+
+.formLeftSide {
+  margin: 40px;
+  display: flex;
+  flex-direction: column;
+}
+
+.formRightSide {
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.formRightSide input {
+  width: 700px;
+  height: 600px;
+}
+
+.formItem {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 10px 0;
+}
+
+#mainPoints {
+  height: 100px;
+}
+
+#painPoints {
+  height: 100px;
+}
+
+.studySession {
+  font-family: "Oswald", sans-serif;
+  color: #FF6600;
+  margin: 20px;
+  font-weight: bold;
+  height: 100%;
+}
+
+.studySession nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.chatView {
+  margin-top: -125px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 100vh;
+  color: white;
+  font-size: 2.5rem;
+}
+
+.chatUserInput {
+  display: flex;
+  flex-direction: row;
 }
 
 @media screen and (max-width: 1800px) {
@@ -293,6 +380,21 @@ body {
     width: 350px;
     height: 350px;
     font-size: 1.75rem;
+  }
+}
+
+@media screen and (max-width: 1650px) {
+  .createSessionMain form {
+    width: 1400px;
+  }
+
+  .createSessionMain .formItem input {
+    width: 500px;
+  }
+
+  .formRightSide input {
+    width: 600px;
+    height: 600px;
   }
 }
 
@@ -322,6 +424,21 @@ body {
   }
 }
 
+@media screen and (max-width: 1450px) {
+  .createSessionMain form {
+    width: 1200px;
+  }
+
+  .createSessionMain .formItem input {
+    width: 400px;
+  }
+
+  .formRightSide input {
+    width: 500px;
+    height: 600px;
+  }
+}
+
 @media screen and (max-width: 1400px) {
   .mainMenu h1 {
     font-size: 2.5rem;
@@ -333,6 +450,21 @@ body {
     width: 250px;
     height: 250px;
     font-size: 1.5rem;
+  }
+}
+
+@media screen and (max-width: 1250px) {
+  .createSessionMain form {
+    width: 1000px;
+  }
+
+  .createSessionMain .formItem input {
+    width: 300px;
+  }
+
+  .formRightSide input {
+    width: 400px;
+    height: 600px;
   }
 }
 

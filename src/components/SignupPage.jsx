@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+
 function SignupPage() {
   const navigate = useNavigate();
 
@@ -12,26 +13,38 @@ function SignupPage() {
   const [email, setEmail] = useState('');
   const [gradeLevel, setGradeLevel] = useState('');
 
-  function createUser() {
-    fetch('/signup', {
+  function createUser(e) {
+    e.preventDefault();
+    fetch('/user/signup', {
       method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify({
-        firstname,
-        lastname,
-        username,
-        password,
-        email,
-        gradeLevel
+        firstName: firstname,
+        lastName: lastname,
+        username: username,
+        password: password,
+        email: email,
+        gradeLevel: gradeLevel
       })
-    }).then(res => {
+    }).then(response => response.json())
+      .then(data => {
+        if (data.success) {
       navigate('/mainmenu');
+    } else {
+      console.error('Error', data.message);
+    }
+    })
+    .catch((error) => {
+      console.error('Error:',error);
     });
   }
 
   return (
     <div className="signupPage">
       <img src="./logo.png"/>
-      <form> 
+      <form onSubmit={createUser}> 
         <table>
           <tbody>
             <tr>
@@ -41,8 +54,8 @@ function SignupPage() {
                   className="formInput" 
                   name="firstname"
                   type="text" 
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
+                  value={firstname}
+                  onChange={(e) => setFirstname(e.target.value)}
                   required 
                   placeholder="What's your name?">
                 </input>
@@ -85,7 +98,7 @@ function SignupPage() {
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  required placeholder="What username would you like?">
+                  required placeholder="Create password">
                 </input>
               </td>
             </tr>
@@ -120,7 +133,7 @@ function SignupPage() {
           </tbody>
         </table>
         <div>
-          <button className="orangeBtn">Create Account</button>
+          <button className="orangeBtn" type="submit">Create Account</button>
         </div>
       </form>
     </div>

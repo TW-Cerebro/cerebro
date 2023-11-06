@@ -5,7 +5,7 @@ const studentSchema = new mongoose.Schema({
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
   username: { type: String, required: true, unique: true },
-  email: { type: String, required: true, unique: true },
+  email: { type: String, required: true},
   password: { type: String, required: true },
   gradeLevel: { type: String, required: true },
   studyPlans: [{ 
@@ -20,11 +20,28 @@ const studentSchema = new mongoose.Schema({
   // Do we need to add any other profile related information here?
 }, { timestamps: true });
 
+
+// Below is a pre-save hook to hash the password before saving
+// 
+const bcrypt = require('bcyrptjs');
+studentSchema.pre('save', function (next) {
+  if (!this.isModified('password')) return next();
+
+  bcrypt.genSalt(10, (err, salt) => {
+    if (err) return next(err);
+    bcrypt.hash(this.password, salt, (err, hash) => {
+      if (err) return next(err);
+      this.password = hash;
+      next();
+    });
+  });
+});
+
 // collection name: 'student', assuming that's where we will be saving our users. 
 const Student = mongoose.model('student', studentSchema);
 
 /////////////// STUDY PLAN SCHEMA //////////////
-const studyPlanSchema = new mongoose.Schema({
+const studySessionSchema = new mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'student' },
   subjects: [{
     name: String,
