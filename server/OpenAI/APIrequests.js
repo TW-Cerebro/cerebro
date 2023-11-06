@@ -8,20 +8,18 @@ const generatePrompt = require('./generatePrompt');
 const router = express.Router();
 
 
-const OPENAI_API_KEY = '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';
+const OPENAI_API_KEY = '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';
 
-const studySessionsStore = {};
+//const studySessionsStore = {};
 
 router.post('/create-study-session', async (req, res, next) => {
     //console.log test
     console.log('Received request to create study session')
 
-    const { firstName, gradeLevel, sessionName, topic, notes, mainPoints, painPoints } = req.body;
+    const { sessionName, topic, notes, mainPoints, painPoints } = req.body;
 //console.log test
 console.log('req.body:', req.body)
     const session = {
-        firstName,
-        gradeLevel,
         sessionName,
         topic,
         notes,
@@ -45,7 +43,7 @@ console.log('req.body:', req.body)
     session.messages.push({ role: "user", content: 'hi!' })
     
     // Save session to session store with sessionName as key
-    studySessionsStore[sessionName] = session;
+    //studySessionsStore[sessionName] = session;
 //console.log test
 console.log('session object:', session)
     //API call
@@ -62,10 +60,10 @@ console.log('session object:', session)
                 'messages': session.messages
             })
         });
-        console.log(response)
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
+        //console.log(response)
+        // if (!response.ok) {
+        //     throw new Error(`HTTP error! status: ${response.status}`);
+        // }
 
         const responseData = await response.json();
         //console.log testing
@@ -75,12 +73,12 @@ console.log('session object:', session)
         console.log('API call succeeded:', responseData.choices[0]);
 
         //add chatbot response to messages list for reference in next user interaction
-        studySessionsStore[sessionName].messages.push({ role: "assistant", content: sanitizedResponse });
+        session.messages.push({ role: "assistant", content: sanitizedResponse });
 
         res.json({
             success: true,
             message: 'Study session created and chatbot initialized',
-            studySession: studySessionsStore[sessionName],
+            convoHistory: session.messages,
             chatbotMessage: sanitizedResponse
         });
     } catch (error) {
@@ -96,27 +94,28 @@ console.log('session object:', session)
 });
 
 router.post('/ask-question', async (req,res, next) => {
-    const { question, sessionName } = req.body;
+    const { question, convoHistory } = req.body;
 
     //console.log testing
     console.log('request body:', req.body)
     
+    convoHistory.push({ role: 'user', content: question })
     
-    // Get session details from session store
-    const session = studySessionsStore[sessionName];
+    // // Get session details from session store
+    // const session = studySessionsStore[sessionName];
     
-    //console.log testing
-    console.log('Session:', session)
+    // //console.log testing
+    // console.log('Session:', session)
 
-    if(!session) {
-        return res.status(404).json({
-            success: false,
-            message: 'Study session not found',
-        });
-    }
+    // if(!session) {
+    //     return res.status(404).json({
+    //         success: false,
+    //         message: 'Study session not found',
+    //     });
+    // }
 
-    // Add the new question to the message list
-    studySessionsStore[sessionName].messages.push({ role: "user", content: question });
+    // // Add the new question to the message list
+    // studySessionsStore[sessionName].messages.push({ role: "user", content: question });
 
     // API call (rest of code is same as previous route)
     try {
@@ -128,13 +127,13 @@ router.post('/ask-question', async (req,res, next) => {
             },
             body: JSON.stringify({
                 'model': "gpt-3.5-turbo",
-                'messages': session.messages
+                'messages': convoHistory
             })
         });
 
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
+        // if (!response.ok) {
+        //     throw new Error(`HTTP error! status: ${response.status}`);
+        // }
 
         const responseData = await response.json();
 
@@ -143,12 +142,12 @@ router.post('/ask-question', async (req,res, next) => {
         console.log('API call succeeded:', responseData.choices[0]);
 
         //add chatbot response to messages list for reference in next user interaction
-        studySessionsStore[sessionName].messages.push({ role: "assistant", content: sanitizedResponse });
+        convoHistory.push({ role: "assistant", content: sanitizedResponse });
 
         res.json({
             success: true,
             message: 'Chatbot responded',
-            studySession: studySessionsStore[sessionName],
+            convoHistory: convoHistory,
             chatbotMessage: sanitizedResponse
         });
     } catch (error) {
@@ -164,3 +163,6 @@ router.post('/ask-question', async (req,res, next) => {
 });
 
 module.exports = router;
+
+
+

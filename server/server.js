@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const userController = require('./Database/UserController.js')
+const sessionController = require('./Database/SessionController.js')
 
 const mongoose = require('mongoose');
 
@@ -45,6 +46,8 @@ app.get('/', (req, res) => {
 app.use('/api', APIrequests);
 
 app.use('/user', userController);
+
+app.use('/session', sessionController);
 
 app.use((err, req, res, next) => {
   console.error('Error:', err.message);

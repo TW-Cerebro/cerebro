@@ -23,7 +23,9 @@ function StudySession({username}) {
           <button className="orangeBtn" onClick={saveSession}>Save Session</button>
         </nav>
         <div className="chatArea">
-
+          {messageList.map((message, index) => {
+            return <Message message={message} key={index}></Message>;
+          })}
         </div>
         <form className="chatUserInput">
           <input
