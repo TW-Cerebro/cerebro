@@ -12,21 +12,23 @@ function CreateSession({username}) {
   const [notes, setNotes] = useState('');
   const navigate = useNavigate();
 
-  function submitSession() {
+  function submitSession(e) {
+    e.preventDecault();
     // update to send to database
-    fetch('/api'), {
+    fetch('/api/create-study-session'), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        title,
-        topic,
-        mainPoints,
-        painPoints,
-        notes
+        username: username,
+        title: title,
+        topic: topic,
+        mainPoints: mainPoints,
+        painPoints: painPoints,
+        notes: notes
       }).then(res => {
-        navigate('/studysession')
+        navigate('/sessionpage')
       }).catch(err => {
         console.log.error('Error creating session');
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -38,7 +40,7 @@ function CreateSession({username}) {
     <div className="createSession">
       <HeaderMenu username = {username} />
       <section className = "createSessionMain">
-        <form>
+        <form onSubmit={submitSession}>
           <div className="createSessionForm">
             <div className="formLeftSide">
               <h1>CREATE NEW STUDY SESSION</h1>
@@ -104,7 +106,7 @@ function CreateSession({username}) {
                 required 
                 placeholder="Copy and Paste Your Notes Here">
               </input>
-              <button className="orangeBtn" onClick={submitSession}>Create Session</button>
+              <button className="orangeBtn" type='submit'>Create Session</button>
             </div>
             
           </div>

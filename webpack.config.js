@@ -14,6 +14,17 @@ module.exports = {
     static: {
       directory: path.join(__dirname, 'public')
 },
+headers: { 'Access-Control-Allow-Origin': '*' },
+    proxy: {
+      '/api/**': {
+        target: 'http://localhost:3000/',
+        secure: false,
+      },
+      '/user/**': {
+        target: 'http://localhost:3000/',
+        secure: false,
+      },
+    },
     open: true,
     hot: true,
     liveReload: true,

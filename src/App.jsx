@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route } from "react-router-dom";
 import { useState } from "react";
 import LoginPage from "./components/LoginPage.jsx";
 import SignupPage from "./components/SignupPage.jsx";
@@ -13,35 +13,57 @@ import CreateFlashCards from "./components/CreateFlashCards.jsx";
 import ReviewFlashCards from "./components/ReviewFlashCards.jsx";
 
 const App = () => {
+  const [username, updateUsername] = useState("");
+  const usernameChangeHandler = (e) => {
+    updateUsername(e.target.value);
+  };
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<LoginPage />} />
-        <Route path="/signup" element={<SignupPage />} />
+        <Route
+          path="/"
+          element={
+            <LoginPage
+              username={username}
+              usernameChangeHandler={usernameChangeHandler}
+            />
+          }
+        />
+        <Route
+          path="/signup"
+          element={
+            <SignupPage
+              username={username}
+              usernameChangeHandler={usernameChangeHandler}
+            />
+          }
+        />
         {/* <Route path="/" element={<CreateSession />} /> */}
         <Route path="/mainmenu" element={<FrontPage />} />
-        <Route path="/createsession" element={<CreateSession />} />
+        <Route
+          path="/createsession"
+          element={<CreateSession username={username} />}
+        />
         <Route path="/studysession" element={<StudySession />} />
         <Route path="/reviewstudysession" element={<ReviewStudySession />} />
         <Route path="/createflashcards" element={<CreateFlashCards />} />
         <Route path="/reviewflashcards" element={<ReviewFlashCards />} />
       </Routes>
     </div>
-  )
-}
+  );
+};
 
+// return <SignupPage />
+// return <LoginPage />
 
-  // return <SignupPage />
-  // return <LoginPage />
+// const [mode, updateMode] = useState("loginPage");
+// const [title, updateTitle] = useState("");
+// const [topic, updateTopic] = useState("");
 
-  // const [mode, updateMode] = useState("loginPage");
-  // const [title, updateTitle] = useState("");
-  // const [topic, updateTopic] = useState("");
-
-  // const titleChangeHandler = (e) => {
-  //   updateTitle(e.target.value);
-  //   console.log(e.target.value);
-  // };
+// const titleChangeHandler = (e) => {
+//   updateTitle(e.target.value);
+//   console.log(e.target.value);
+// };
 
 //   const topicChangeHandler = (e) => {
 //     updateTopic(e.target.value);

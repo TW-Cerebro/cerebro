@@ -3,12 +3,12 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 
-function SignupPage() {
+function SignupPage({ username, usernameChangeHandler }) {
   const navigate = useNavigate();
 
   const [firstname, setFirstname] = useState('');
   const [lastname, setLastname] = useState('');
-  const [username, setUsername] = useState('');
+  // const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [gradeLevel, setGradeLevel] = useState('');
@@ -83,7 +83,7 @@ function SignupPage() {
                   name="username"
                   type="text"
                   value={username}
-                  onChange={(e) => setUsername(e.target.value)}
+                  onChange={usernameChangeHandler}
                   required
                   placeholder="What username would you like?">
                 </input>
