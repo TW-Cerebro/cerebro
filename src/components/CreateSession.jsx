@@ -108,15 +108,15 @@ function CreateSession({username}) {
             </div>
             <div className="formRightSide">
               <label>Notes</label>
-              <input 
+              <textarea 
                 className="formInput" 
                 name="notes"
-                type="textarea" 
+                // type="textarea" 
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
                 required 
                 placeholder="Copy and Paste Your Notes Here">
-              </input>
+              </textarea>
               <button className="orangeBtn" type="submit">Create Session</button>
             </div>   
           </div>
