@@ -18,11 +18,10 @@ const App = () => {
       <Routes>
         {/* <Route path="/" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} /> */}
-        <Route path="/" element={<SessionPage />} />
+        <Route path="/" element={<CreateSession />} />
         <Route path="/mainmenu" element={<FrontPage />} />
-        <Route path="/createsession" element={<CreateSession />} />
-        {/* <Route path="/sessionPage" element={<SessionPage />} /> */}
-        <Route path="/studysession" element={<StudySession />} />
+        {/* <Route path="/createsession" element={<CreateSession />} /> */}
+        <Route path="/studysession" element={<SessionPage />} />
         <Route path="/reviewstudysession" element={<ReviewStudySession />} />
         <Route path="/createflashcards" element={<CreateFlashCards />} />
         <Route path="/reviewflashcards" element={<ReviewFlashCards />} />

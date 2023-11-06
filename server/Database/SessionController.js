@@ -5,16 +5,16 @@ const { StudySession } = require('./StudentModelv2.js')
 //Signup route
 router.post('/create', async (req, res) => {
     try {
-        const { title, topic, mainPoints, painPoints, notes } = req.body;
+        const { sessionName, topic, mainPoints, painPoints, notes } = req.body;
         console.log('Console log req.body:', req.body);
         const session = await StudySession.create({
-            title,
+            sessionName,
             topic,
             mainPoints,
             painPoints,
             notes,
         });
-        console.log('Console log req.body:', session);
+        console.log('Console log session', session);
 
         res.status(201).json({
             success: true,

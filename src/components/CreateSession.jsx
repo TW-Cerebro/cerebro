@@ -5,39 +5,44 @@ import HeaderMenu from "./HeaderMenu.jsx";
 import FooterMenu from "./FooterMenu.jsx";
 
 function CreateSession({username}) {
-  const [title, setTitle] = useState('');
+  const navigate = useNavigate();
+
+  const [sessionName, setSessionName] = useState('');
   const [topic, setTopic] = useState('');
   const [mainPoints, setMainPoints] = useState('');
   const [painPoints, setPainPoints] = useState('');
   const [notes, setNotes] = useState('');
-  const navigate = useNavigate();
+  
 
-  function submitSession() {
+  function submitSession(e) {
     e.preventDefault();
+
+    const sessionData = {
+      sessionName,
+      topic,
+      mainPoints,
+      painPoints,
+      notes,
+    };
+
     fetch('/session/create', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        title,
-        topic,
-        mainPoints,
-        painPoints,
-        notes,
+      body: JSON.stringify(sessionData)
       })
-      }).then(respnse => {
-        if (response.ok) {
-          return response.json();
-        }
-        throw new Error ('Response was not ok');
-      })
+      .then(response => response.json())
       .then(data => {
-        navigate('/studysession');
+        if (data.success) {
+          navigate('/studysession', {state: sessionData});
+        } else {
+          console.error('Error', data.message)
+        }
       })
       .catch(err => {
-        console.log.error('Error creating session');
-        throw new Error(`HTTP error! status: ${response.status}`);
+        console.error('Error creating session');
+        //throw new Error(`HTTP error! status: ${response.status}`);
       })
     }
   
@@ -56,8 +61,8 @@ function CreateSession({username}) {
                   className="formInput" 
                   name="title"
                   type="text" 
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
+                  value={sessionName}
+                  onChange={(e) => setSessionName(e.target.value)}
                   required 
                   placeholder="What would you like to name this session?">
                 </input>
@@ -79,7 +84,7 @@ function CreateSession({username}) {
                 <input 
                   id="mainPoints"
                   className="formInput" 
-                  name="topic"
+                  name="mainPoints"
                   type="text" 
                   value={mainPoints}
                   onChange={(e) => setMainPoints(e.target.value)}
@@ -92,7 +97,7 @@ function CreateSession({username}) {
                 <input 
                   id="painPoints"
                   className="formInput" 
-                  name="topic"
+                  name="painPoints"
                   type="text" 
                   value={painPoints}
                   onChange={(e) => setPainPoints(e.target.value)}
@@ -105,7 +110,7 @@ function CreateSession({username}) {
               <label>Notes</label>
               <input 
                 className="formInput" 
-                name="topic"
+                name="notes"
                 type="textarea" 
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}

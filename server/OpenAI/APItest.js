@@ -2,7 +2,7 @@
 
 const BASE_URL = 'http://localhost:3000';
 
-async function createSession(firstName, gradeLevel, sessionName, topic, notes, mainPoints, painPoints) {
+async function createSession(sessionName, topic, notes, mainPoints, painPoints) {
   try {
     const response = await fetch(`${BASE_URL}/api/create-study-session`, {
       method: 'POST',
@@ -10,8 +10,6 @@ async function createSession(firstName, gradeLevel, sessionName, topic, notes, m
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        firstName,
-        gradeLevel,
         sessionName,
         topic,
         notes,
