@@ -6,7 +6,7 @@ const sessionController = require('./Database/SessionController.js')
 
 const mongoose = require('mongoose');
 
-const atlasUri = 'mongodb+srv://lfv2bcerebro:IQBO5fsrsenrmg9A@cluster0.rfcpwqu.mongodb.net/?retryWrites=true&w=majority'
+const atlasUri = 'mongodb+srv://teeringe:ifG2XBwUgwd5yMXU@cerebro.ktqbbqx.mongodb.net/?retryWrites=true&w=majority'
 
 mongoose.connect(atlasUri)
   .then(() => {
